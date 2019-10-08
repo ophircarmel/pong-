@@ -52,22 +52,31 @@ public class Move : MonoBehaviour
         }
         if (collision.collider.name == "Cube" || collision.collider.name == "Cube (1)")
         {
-            if ((collision.collider.name == "Cube"))
+            if (collision.collider.tag == "winWall")
             {
-                this.score2++;
-            } else {
-                this.score1++;
+                if ((collision.collider.name == "Cube"))
+                {
+                    this.score2++;
+                }
+                else
+                {
+                    this.score1++;
+                }
+                rg.position = new Vector3(10, 1, 25);
+                strPsn = rg.position;
+                rg.velocity = new Vector3(0, 0, 0);
+                countdown();
+                return;
             }
+            else { 
             Debug.Log("here");
             flag = false;
             collision.collider.GetComponent<BoxCollider>().isTrigger = true;
             collision.collider.GetComponent<MeshRenderer>().enabled = false;
             vel.z = -vel.z;
             dy = vel.z;
-            //rg.position = strPsn;
-            //rg.velocity = new Vector3(0, 0, 0);
-            //countdown();
-            //return;
+            }
+            
             rg.velocity = vel;
             rg.position += rg.velocity / 100;
         }
@@ -103,18 +112,17 @@ public class Move : MonoBehaviour
         {
             if ((collider.name == "Cube"))
             {
-                rg.position = new Vector3(10, 1, strPsn.z - 50);
-                strPsn = rg.position;
+                strPsn = new Vector3(10, 1, strPsn.z -50);
+                rg.position = strPsn;
             }
             else
             {
-                rg.position = new Vector3(10, 1, strPsn.z + 50);
-                strPsn = rg.position;
+                strPsn = new Vector3(10, 1, strPsn.z + 50);
+                rg.position = strPsn;
             }
             
             rg.velocity = new Vector3(0, 0, 0);
             countdown();
-            return;
         }
     }
     void countdown()
