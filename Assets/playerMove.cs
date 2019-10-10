@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class playerMove : MonoBehaviour
 {
-    public float dx = 2.5f;
+    // Paddle's velocity.
+    public const float dx = 2.5f;
+
+    // Rigidbody component.
     public Rigidbody rg;
+
+    // Insert values using unity ui.
     public string right;
     public string left;
     
