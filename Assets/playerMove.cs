@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,8 +14,8 @@ public class playerMove : MonoBehaviour
     // Insert values using unity api.
     public string right;
     public string left;
-    
-    
+
+
     // <summary>
     // Start is called before the first frame update.
     // </summary>
@@ -36,13 +37,14 @@ public class playerMove : MonoBehaviour
             rg.velocity = new Vector3(dx, 0, 0); ;
         }
         else if (Input.GetKey(left))
-            {
-                // Move left, according to user's input.
-                rg.velocity = new Vector3(-dx, 0, 0);
-            }
-        else {
-                // Another key is not acceptable, don't move.
-                rg.velocity = new Vector3(0, 0, 0);
-            }
+        {
+            // Move left, according to user's input.
+            rg.velocity = new Vector3(-dx, 0, 0);
+        }
+        else
+        {
+            // Another key is not acceptable, don't move.
+            rg.velocity = new Vector3(0, 0, 0);
+        }
     }
 }

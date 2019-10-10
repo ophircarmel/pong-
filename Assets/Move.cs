@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,7 +19,7 @@ public class Move : MonoBehaviour
 
     // Start position of the ball.
     private Vector3 strPsn = new Vector3(10, 1, 25);
-
+    private bool isIn = false;
 
     // <summary>
     // Start is called before the first frame update.
@@ -32,6 +32,7 @@ public class Move : MonoBehaviour
         {
             // Set rigidbody component.
             rg = transform.gameObject.GetComponent<Rigidbody>();
+            strPsn = transform.position;
         }
 
         // Set random val to indicate the directionof the ball to move.
@@ -63,19 +64,21 @@ public class Move : MonoBehaviour
     // <param name="collision"> The collision object </param>
     public void OnCollisionEnter(Collision collision)
     {
+        if (isIn)
+        {
+            return;
+        }
         Debug.Log("col");
 
         bool flag = true;
 
         Vector3 vel = new Vector3(dx, 0, dz);
-
-        Debug.Log(vel);
-
+        
         // Cubes set on the sides of the board.
         string[] sideCubes = { "Cube (2)", "Cube (3)" };
 
         // Cubes set as goals.
-        string[] goalCubes = { "Cube", "Cube (1)" };
+        string[] goalCubes = { "leftWall", "centerWall", "rightWall"};
 
         if (sideCubes.Contains(collision.collider.name))
         {
@@ -87,11 +90,12 @@ public class Move : MonoBehaviour
 
         if (goalCubes.Contains(collision.collider.name))
         {
+            Debug.Log(collision.collider.name + ", " + collision.collider.transform.parent.name + ", " + collision.collider.transform.parent.transform.parent.name);
+
             if (collision.collider.tag == "winWall")
             {
                 // A goal is scored.
-
-                if ((collision.collider.name == "Cube"))
+                if ((collision.collider.transform.parent.name == "wall1"))
                 {
                     // Player 2 has scored a goal, increase his score.
                     this.score2++;
@@ -113,9 +117,11 @@ public class Move : MonoBehaviour
                 countdown();
                 return;
             }
-            else
+            else if ((collision.collider.transform.parent.name == "wall1" && dz > 0) || (collision.collider.transform.parent.name == "wall2" && dz < 0))
             {
-                Debug.Log("here");
+                return;
+            } else
+            {
                 flag = false;
                 collision.collider.GetComponent<BoxCollider>().isTrigger = true;
                 collision.collider.GetComponent<MeshRenderer>().enabled = false;
@@ -128,7 +134,6 @@ public class Move : MonoBehaviour
         }
         if (collision.collider.tag == "Player")
         {
-            Debug.Log(collision.transform.position.x + " - " + transform.position.x + " = " + (collision.transform.position.x - transform.position.x));
             if (Mathf.Abs(collision.transform.position.x - transform.position.x) > 0.8)
             {
                 if (collision.transform.position.x > transform.position.x)
@@ -147,8 +152,6 @@ public class Move : MonoBehaviour
         if (flag)
         {
             rg.velocity = vel;
-            Debug.Log(collision.collider.name);
-            Debug.Log(vel);
         }
         Debug.Log("col-end");
 
@@ -156,22 +159,63 @@ public class Move : MonoBehaviour
     }
     public void OnTriggerEnter(Collider collider)
     {
-        if (collider.name == "Cube" || collider.name == "Cube (1)")
+        if (collider.name == "Plane" || isIn)
         {
-            if ((collider.name == "Cube"))
+            return;
+        }
+        isIn = true;
+        Debug.Log("trig-start" + "\n" + strPsn);
+        Debug.Log(collider.name + ", " + collider.transform.parent.name + ", " + collider.transform.parent.transform.parent.tag);
+        float x;
+        float z;
+        if (collider.transform.parent.name == "wall1" || collider.transform.parent.name == "wall2")
+        {
+            if ((collider.transform.parent.name == "wall1"))
             {
-                strPsn = new Vector3(10, 1, strPsn.z - 50);
-                rg.position = strPsn;
+                z = strPsn.z - 50;
             }
             else
             {
-                strPsn = new Vector3(10, 1, strPsn.z + 50);
-                rg.position = strPsn;
+                z = strPsn.z + 50;
             }
-
+            if (collider.name == "rightWall") {
+                if ((collider.transform.parent.transform.parent.tag == "rightBoard"))
+                {
+                    x = strPsn.x - 50;
+                }
+                else
+                {
+                    x = strPsn.x + 25;
+                }
+            }
+            else if (collider.name == "leftWall")
+            {
+                if ((collider.transform.parent.transform.parent.tag == "leftBoard"))
+                {
+                    x = strPsn.x + 50;
+                }
+                else
+                {
+                   x = strPsn.x - 25;
+                }
+            } else
+            {
+                x = strPsn.x;
+            }
+            strPsn = new Vector3(x, 1, z);
+            rg.position = strPsn;
             rg.velocity = new Vector3(0, 0, 0);
+            Debug.Log("trig-end");
             countdown();
         }
+    }
+    void OnCollisionExit(Collision collision)
+    {
+        isIn = false;
+    }
+    void OnTriggerExit(Collider other)
+    {
+        isIn = false;
     }
     void countdown()
     {

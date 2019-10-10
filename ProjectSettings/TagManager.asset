@@ -6,6 +6,8 @@ TagManager:
   tags:
   - wall
   - winWall
+  - rightBoard
+  - leftBoard
   layers:
   - Default
   - TransparentFX
