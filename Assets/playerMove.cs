@@ -10,7 +10,7 @@ public class playerMove : MonoBehaviour
     // Rigidbody component.
     public Rigidbody rg;
 
-    // Insert values using unity ui.
+    // Insert values using unity api.
     public string right;
     public string left;
     
