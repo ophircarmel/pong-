@@ -1,0 +1,53 @@
+PGP PROTOCOL (PONG GAME PROTOCOL)
+
+Assumptions:
+	Size of board - fixed - <width = ?, height = ?>
+	Amount of steps in each movement - fixed - steps = ?
+	
+	OR
+	
+	The ratio between the above parameters is fixed.
+	
+
+Client Commands:
+
+	MOVE:
+		Move the paddle in a specifiec direction.
+		
+		params:
+			direction (LEFT / RIGHT) - The direction to move in.
+			
+	
+
+Server Commands:
+
+	BROKEN WALL:
+		A player has scored a goal and a wall is now broken.
+		
+		params:
+			wall (PLAYER LEFT / PLAYER RIGHT / OPONENT LEFT / OPONENT RIGHT) - the broken wall.
+
+	
+	MOVE BOARD:
+		Move to a new board.
+		The boards are indexed like this:
+		1 2 3
+		4 5 6
+		7 8 9
+		
+		params:
+			board - the index of the board to move to.
+
+			
+	STATUS:
+		Send the status of the game.
+		
+		params:
+			data - player's position, oponent's position, ball's position.
+	
+	
+	WIN:
+		A player has won the game.
+		
+		params:
+			who (PLAYER / OPONENT) - the winner.
