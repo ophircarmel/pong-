@@ -12,8 +12,8 @@ public class playerMove : MonoBehaviour
     public Rigidbody rg;
 
     // Insert values using unity api.
-    public string right;
-    public string left;
+    public string up;
+    public string down;
 
 
     // <summary>
@@ -22,6 +22,16 @@ public class playerMove : MonoBehaviour
     void Start()
     {
         rg = transform.gameObject.GetComponent<Rigidbody>();
+        if (gameObject.name == "player1")
+        {
+            up = transform.parent.parent.GetComponent<setting>().Player1Up;
+            down = transform.parent.parent.GetComponent<setting>().Player1Down;
+        }
+        else
+        {
+            up = transform.parent.parent.GetComponent<setting>().Player2Up;
+            down = transform.parent.parent.GetComponent<setting>().Player2Down;
+        }
     }
 
 
@@ -31,20 +41,23 @@ public class playerMove : MonoBehaviour
     // </summary>
     void Update()
     {
-        if (Input.GetKey(right))
+        if (transform.parent.parent.GetComponent<setting>().twoPlayers || transform.name == "player1")
         {
-            // Move right, according to user's input.
-            rg.velocity = new Vector3(dx, 0, 0); ;
-        }
-        else if (Input.GetKey(left))
-        {
-            // Move left, according to user's input.
-            rg.velocity = new Vector3(-dx, 0, 0);
-        }
-        else
-        {
-            // Another key is not acceptable, don't move.
-            rg.velocity = new Vector3(0, 0, 0);
+            if (Input.GetKey(down))
+            {
+                // Move right, according to user's input.
+                rg.velocity = new Vector3(dx, 0, 0); ;
+            }
+            else if (Input.GetKey(up))
+            {
+                // Move left, according to user's input.
+                rg.velocity = new Vector3(-dx, 0, 0);
+            }
+            else
+            {
+                // Another key is not acceptable, don't move.
+                rg.velocity = new Vector3(0, 0, 0);
+            }
         }
     }
 }

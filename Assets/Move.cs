@@ -108,12 +108,14 @@ public class Move : MonoBehaviour
                 }
 
                 // Relocate the ball.
-                rg.position = new Vector3(10, 1, 25);
+                rg.position = new Vector3(10, 0, 25);
                 strPsn = rg.position;
 
                 // Set ball's valocity as 0 for meantime.
                 rg.velocity = new Vector3(0, 0, 0);
-
+                // update camera location
+                CameraManager manager = GameObject.Find("Main Camera").GetComponent<CameraManager>();
+                manager.newCamPsn = new Vector3(10, 15, 25);
                 // Wait a bit and start over.
                 countdown();
                 return;
@@ -203,13 +205,13 @@ public class Move : MonoBehaviour
             {
                 x = strPsn.x;
             }
-            strPsn = new Vector3(x, 1, z);
+            strPsn = new Vector3(x, 0, z);
             rg.position = strPsn;
             rg.velocity = new Vector3(0, 0, 0);
 
             // update camera location
             CameraManager manager = GameObject.Find("Main Camera").GetComponent<CameraManager>();
-            manager.newCamPsn = new Vector3(x, 10, z);
+            manager.newCamPsn = new Vector3(x, 15, z);
 
             Debug.Log("trig-end");
             countdown();
