@@ -99,6 +99,7 @@ public class Move : MonoBehaviour
                 {
                     // Player 2 has scored a goal, increase his score.
                     this.score2++;
+
                 }
                 else
                 {
@@ -205,6 +206,11 @@ public class Move : MonoBehaviour
             strPsn = new Vector3(x, 1, z);
             rg.position = strPsn;
             rg.velocity = new Vector3(0, 0, 0);
+
+            // update camera location
+            CameraManager manager = GameObject.Find("Main Camera").GetComponent<CameraManager>();
+            manager.newCamPsn = new Vector3(x, 10, z);
+
             Debug.Log("trig-end");
             countdown();
         }
