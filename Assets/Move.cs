@@ -38,17 +38,18 @@ public class Move : MonoBehaviour, IMoveBoardListener
     {
         Debug.Log("start");
 
-        // Add self as listener.
-        this.listeners.Add(this);
-
-        // Add camera as listener.
-        this.listeners.Add((CameraManager) GameObject.Find("Main Camera").GetComponent<CameraManager>());
-
-        // Set current board to the middle one.
-        this.currentboard = 5;
+        
 
         if (score1 == score2 && score1 == 0)
         {
+            // Add self as listener.
+            this.listeners.Add(this);
+
+            // Add camera as listener.
+            this.listeners.Add((CameraManager)GameObject.Find("Main Camera").GetComponent<CameraManager>());
+
+            // Set current board to the middle one.
+            this.currentboard = 5;
             // Set rigidbody component.
             rg = transform.gameObject.GetComponent<Rigidbody>();
             strPsn = transform.position;
@@ -125,7 +126,7 @@ public class Move : MonoBehaviour, IMoveBoardListener
                     // Player 1 has scored a goal, increase his score.
                     this.score1++;
                 }
-
+                currentboard = 5;
                 // Relocate the ball.
                 rg.position = new Vector3(10, 0, 25);
                 strPsn = rg.position;
@@ -190,7 +191,7 @@ public class Move : MonoBehaviour, IMoveBoardListener
         //Debug.Log(collider.name + ", " + collider.transform.parent.name + ", " + collider.transform.parent.transform.parent.tag);
 
         int next = this.currentboard;
-
+        Debug.Log("startZZZ: " + next);
         if (collider.transform.parent.name == "wall1" || collider.transform.parent.name == "wall2")
         {
             if ((collider.transform.parent.name == "wall1"))
@@ -203,11 +204,25 @@ public class Move : MonoBehaviour, IMoveBoardListener
             }
 
             if (collider.name == "rightWall") {
-                next += 1;
-            }
-            else if (collider.name == "leftWall")
-            {
-                next -= 1;
+                 if (collider.transform.parent.parent.tag == "rightBoard")
+                 {
+                     next -= 2;
+                 }
+                 else
+                 {
+                     next += 1;
+                 }
+             }
+             else if (collider.name == "leftWall")
+             {
+                 if (collider.transform.parent.parent.tag == "leftBoard")
+                 {
+                     next += 2;
+                 }
+                 else
+                {
+                    next -= 1;
+                }
             }
             /*strPsn = new Vector3(x, 0, z);
             rg.position = strPsn;

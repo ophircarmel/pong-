@@ -29,7 +29,7 @@ public class ComputerMove : MonoBehaviour
     {
         float target = ball.position.x;
         bool isCenter = false;
-        if (ball.velocity.z <= 0 || Mathf.Abs(target - center.x) > 25 || ball.position.z > rg.position.z || ball.position.z - rg.position.z < -48)
+        if (ball.velocity.z <= 0 || (ball.position.x > center.x + 12.5) || (ball.position.x < center.x - 12.5) || ball.position.z > rg.position.z || ball.position.z - rg.position.z < -48)
         {
             rg.velocity = Vector3.zero;
             target = center.x;
