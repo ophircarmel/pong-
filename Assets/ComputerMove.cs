@@ -20,7 +20,7 @@ public class ComputerMove : MonoBehaviour
             this.enabled = false;
         }
         rg = transform.gameObject.GetComponent<Rigidbody>();
-        ball = transform.parent.transform.parent.FindChild("Sphere").GetComponent<Rigidbody>();
+        ball = transform.parent.transform.parent.Find("Sphere").GetComponent<Rigidbody>();
         center = rg.position;
     }
 

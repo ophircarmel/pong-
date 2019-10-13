@@ -4,8 +4,15 @@ using System.Linq;
 
 using UnityEngine;
 
-public class Move : MonoBehaviour
+public class Move : MonoBehaviour, IMoveBoardListener
 {
+    private static readonly int BOARDWIDTH = 25;
+
+    private static readonly int BOARDLENGTH = 50;
+
+    // Current board.
+    private int currentboard;
+
     // Velocity' variables.
     public float dx = 2f;
     public float dz = 3f;
@@ -21,12 +28,24 @@ public class Move : MonoBehaviour
     private Vector3 strPsn = new Vector3(10, 1, 25);
     private bool isIn = false;
 
+    // A list of move board listeners.
+    List<IMoveBoardListener> listeners = new List<IMoveBoardListener>();
+
     // <summary>
     // Start is called before the first frame update.
     // </summary>
     void Start()
     {
         Debug.Log("start");
+
+        // Add self as listener.
+        this.listeners.Add(this);
+
+        // Add camera as listener.
+        this.listeners.Add((CameraManager) GameObject.Find("Main Camera").GetComponent<CameraManager>());
+
+        // Set current board to the middle one.
+        this.currentboard = 5;
 
         if (score1 == score2 && score1 == 0)
         {
@@ -52,8 +71,8 @@ public class Move : MonoBehaviour
             dx = -dx;
             dz = -dz;
         }
-        Debug.Log(rg.position + "and, " + rg.velocity);
-        Debug.Log("start - end");
+        //Debug.Log(rg.position + "and, " + rg.velocity);
+        //Debug.Log("start - end");
     }
 
 
@@ -68,7 +87,7 @@ public class Move : MonoBehaviour
         {
             return;
         }
-        Debug.Log("col" + "\n" + transform.position.x);
+        //Debug.Log("col" + "\n" + transform.position.x);
 
         bool flag = true;
 
@@ -90,7 +109,7 @@ public class Move : MonoBehaviour
 
         if (goalCubes.Contains(collision.collider.name))
         {
-            Debug.Log(collision.collider.name + ", " + collision.collider.transform.parent.name + ", " + collision.collider.transform.parent.transform.parent.name);
+            //Debug.Log(collision.collider.name + ", " + collision.collider.transform.parent.name + ", " + collision.collider.transform.parent.transform.parent.name);
 
             if (collision.collider.tag == "winWall")
             {
@@ -156,7 +175,7 @@ public class Move : MonoBehaviour
         {
             rg.velocity = vel;
         }
-        Debug.Log("col-end");
+        //Debug.Log("col-end");
 
 
     }
@@ -167,53 +186,40 @@ public class Move : MonoBehaviour
             return;
         }
         isIn = true;
-        Debug.Log("trig-start" + "\n" + strPsn);
-        Debug.Log(collider.name + ", " + collider.transform.parent.name + ", " + collider.transform.parent.transform.parent.tag);
-        float x;
-        float z;
+        //Debug.Log("trig-start" + "\n" + strPsn);
+        //Debug.Log(collider.name + ", " + collider.transform.parent.name + ", " + collider.transform.parent.transform.parent.tag);
+
+        int next = this.currentboard;
+
         if (collider.transform.parent.name == "wall1" || collider.transform.parent.name == "wall2")
         {
             if ((collider.transform.parent.name == "wall1"))
             {
-                z = strPsn.z - 50;
+                next += 3;
             }
             else
             {
-                z = strPsn.z + 50;
+                next -= 3;
             }
+
             if (collider.name == "rightWall") {
-                if ((collider.transform.parent.transform.parent.tag == "rightBoard"))
-                {
-                    x = strPsn.x - 50;
-                }
-                else
-                {
-                    x = strPsn.x + 25;
-                }
+                next += 1;
             }
             else if (collider.name == "leftWall")
             {
-                if ((collider.transform.parent.transform.parent.tag == "leftBoard"))
-                {
-                    x = strPsn.x + 50;
-                }
-                else
-                {
-                   x = strPsn.x - 25;
-                }
-            } else
-            {
-                x = strPsn.x;
+                next -= 1;
             }
-            strPsn = new Vector3(x, 0, z);
+            /*strPsn = new Vector3(x, 0, z);
             rg.position = strPsn;
             rg.velocity = new Vector3(0, 0, 0);
 
             // update camera location
             CameraManager manager = GameObject.Find("Main Camera").GetComponent<CameraManager>();
-            manager.newCamPsn = new Vector3(x, 15, z);
+            manager.newCamPsn = new Vector3(x, 15, z);*/
+            Debug.Log(next);
+            this.NotifyAll(currentboard, next);
 
-            Debug.Log("trig-end");
+            //Debug.Log("trig-end");
             countdown();
         }
     }
@@ -228,6 +234,46 @@ public class Move : MonoBehaviour
     void countdown()
     {
         Invoke("Start", 3f);
+    }
+
+
+    // <summary>
+    // Notify all listners to move a board.
+    // </summary>
+    // <param name="prevoius"> The board to move from. </param>
+    // <param name="next"> The board to move to. </param>
+    private void NotifyAll(int previous, int next)
+    {
+        foreach (IMoveBoardListener listener in listeners)
+        {
+            listener.MoveBoard(previous, next);
+        }
+    }
+
+
+    // <summary>
+    // Move to another board.
+    // </summary>
+    // <param name="prevoius"> The board to move from. </param>
+    // <param name="next"> The board to move to. </param>
+    public void MoveBoard(int previous, int next)
+    {
+        // Note: given a board indexed as n, the board is GameObject((n-1)/3, (n-1)%3).
+        int boardz = (next - 1) / 3;
+        int boardx = (next - 1) % 3;
+
+        // Calculate next position of the camera.
+        float nx = (boardx - 1) * (BOARDWIDTH + 1) + BOARDWIDTH / 2;
+        int ny = 0;
+        float nz = (1 - boardz) * (BOARDLENGTH + 1) + BOARDLENGTH / 2;
+
+        strPsn = new Vector3(nx, ny, nz);
+        //Debug.Log(strPsn);
+        rg.position = strPsn;
+        rg.velocity = new Vector3(0, 0, 0);
+
+        // Update current board.
+        this.currentboard = next;
     }
 
 }
