@@ -47,7 +47,6 @@ public class Move : MonoBehaviour, IMoveBoardListener
 
             // Add camera as listener.
             this.listeners.Add((CameraManager)GameObject.Find("Main Camera").GetComponent<CameraManager>());
-
             // Set current board to the middle one.
             this.currentboard = 5;
             // Set rigidbody component.
@@ -75,7 +74,10 @@ public class Move : MonoBehaviour, IMoveBoardListener
         //Debug.Log(rg.position + "and, " + rg.velocity);
         //Debug.Log("start - end");
     }
-
+    public void AddListener(IMoveBoardListener l)
+    {
+        this.listeners.Add(l);
+    }
 
     // <summary>
     // OnCollisionEnter is called when this collider/rigidbody has begun touching another rigidbody/collider.

@@ -1144,7 +1144,7 @@ MonoBehaviour:
   Player1Up: up
   Player2Down: s
   Player2Up: w
-  twoPlayers: 0
+  twoPlayers: 1
 --- !u!4 &1679443444
 Transform:
   m_ObjectHideFlags: 0

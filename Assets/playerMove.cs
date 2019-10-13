@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class playerMove : MonoBehaviour
+public class playerMove : MonoBehaviour, IMoveBoardListener
 {
     // Paddle's velocity.
     public const float dx = 2.5f;
@@ -21,6 +21,7 @@ public class playerMove : MonoBehaviour
     // </summary>
     void Start()
     {
+        transform.parent.parent.FindChild("Sphere").GetComponent<Move>().AddListener(this);
         rg = transform.gameObject.GetComponent<Rigidbody>();
         if (gameObject.name == "player1")
         {
@@ -35,6 +36,10 @@ public class playerMove : MonoBehaviour
             }
             up = transform.parent.parent.GetComponent<setting>().Player2Up;
             down = transform.parent.parent.GetComponent<setting>().Player2Down;
+        }
+        if (!transform.parent.name.EndsWith("(1,1)"))
+        {
+            transform.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         }
     }
 
@@ -64,5 +69,22 @@ public class playerMove : MonoBehaviour
             //{
               //  rg.velocity = new Vector3(0, 0, 0);
             //}
+    }
+    // <summary>
+    // Move to another board.
+    // </summary>
+    // <param name="prevoius"> The board to move from. </param>
+    // <param name="next"> The board to move to. </param>
+    public void MoveBoard(int prevoius, int next)
+    {
+        Debug.Log("caculate: " + ((transform.parent.name.Substring(11)[1] - '0') * 3 + (transform.parent.name.Substring(11)[3] - '0') + 1));
+        if ((transform.parent.name.Substring(11)[1] - '0')*3 + (transform.parent.name.Substring(11)[3] - '0') + 1 == next)
+        {
+            transform.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
+        }
+        else
+        {
+            transform.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        }
     }
 }
