@@ -68,7 +68,7 @@ public class Move : MonoBehaviour
         {
             return;
         }
-        Debug.Log("col");
+        Debug.Log("col" + "\n" + transform.position.x);
 
         bool flag = true;
 

@@ -29,6 +29,10 @@ public class playerMove : MonoBehaviour
         }
         else
         {
+            if (!transform.parent.parent.GetComponent<setting>().twoPlayers)
+            {
+                this.enabled = false;
+            }
             up = transform.parent.parent.GetComponent<setting>().Player2Up;
             down = transform.parent.parent.GetComponent<setting>().Player2Down;
         }
@@ -41,8 +45,6 @@ public class playerMove : MonoBehaviour
     // </summary>
     void Update()
     {
-        if (transform.parent.parent.GetComponent<setting>().twoPlayers || transform.name == "player1")
-        {
             if (Input.GetKey(down))
             {
                 // Move right, according to user's input.
@@ -58,6 +60,9 @@ public class playerMove : MonoBehaviour
                 // Another key is not acceptable, don't move.
                 rg.velocity = new Vector3(0, 0, 0);
             }
-        }
+            //if (Input.GetKeyUp(up) || Input.GetKeyUp(down))
+            //{
+              //  rg.velocity = new Vector3(0, 0, 0);
+            //}
     }
 }
