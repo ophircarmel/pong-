@@ -11,7 +11,7 @@ public class Move : MonoBehaviour, IMoveBoardListener
     private static readonly int BOARDLENGTH = 50;
 
     // Current board.
-    private int currentboard;
+    private int currentboard = 5;
 
     // Velocity' variables.
     public float dx = 2f;
@@ -37,9 +37,6 @@ public class Move : MonoBehaviour, IMoveBoardListener
     void Start()
     {
         Debug.Log("start");
-
-        
-
         if (score1 == score2 && score1 == 0)
         {
             // Add self as listener.
@@ -48,7 +45,7 @@ public class Move : MonoBehaviour, IMoveBoardListener
             // Add camera as listener.
             this.listeners.Add((CameraManager)GameObject.Find("Main Camera").GetComponent<CameraManager>());
             // Set current board to the middle one.
-            this.currentboard = 5;
+            //this.currentboard = 5;
             // Set rigidbody component.
             rg = transform.gameObject.GetComponent<Rigidbody>();
             strPsn = transform.position;
@@ -128,7 +125,7 @@ public class Move : MonoBehaviour, IMoveBoardListener
                     // Player 1 has scored a goal, increase his score.
                     this.score1++;
                 }
-                currentboard = 5;
+                
                 // Relocate the ball.
                 rg.position = new Vector3(10, 0, 25);
                 strPsn = rg.position;
@@ -136,8 +133,10 @@ public class Move : MonoBehaviour, IMoveBoardListener
                 // Set ball's valocity as 0 for meantime.
                 rg.velocity = new Vector3(0, 0, 0);
                 // update camera location
-                CameraManager manager = GameObject.Find("Main Camera").GetComponent<CameraManager>();
-                manager.newCamPsn = new Vector3(10, 15, 25);
+                //CameraManager manager = GameObject.Find("Main Camera").GetComponent<CameraManager>();
+                //manager.newCamPsn = new Vector3(10, 15, 25);
+                this.NotifyAll(currentboard, 5);
+                currentboard = 5;
                 // Wait a bit and start over.
                 countdown();
                 return;

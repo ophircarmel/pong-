@@ -77,7 +77,6 @@ public class playerMove : MonoBehaviour, IMoveBoardListener
     // <param name="next"> The board to move to. </param>
     public void MoveBoard(int prevoius, int next)
     {
-        Debug.Log("caculate: " + ((transform.parent.name.Substring(11)[1] - '0') * 3 + (transform.parent.name.Substring(11)[3] - '0') + 1));
         if ((transform.parent.name.Substring(11)[1] - '0')*3 + (transform.parent.name.Substring(11)[3] - '0') + 1 == next)
         {
             transform.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;

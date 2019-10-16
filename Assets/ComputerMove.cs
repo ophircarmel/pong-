@@ -35,7 +35,7 @@ public class ComputerMove : MonoBehaviour
             target = center.x;
             isCenter = true;
         }
-        if (Mathf.Abs(target - rg.position.x) < 2.5 && isCenter)
+        if (Mathf.Abs(target - rg.position.x) < 0.3 && isCenter)
         {
             rg.velocity = Vector3.zero;
             return;
@@ -51,8 +51,28 @@ public class ComputerMove : MonoBehaviour
         
     }
 
-    private float findTaget()
+    /*private float findTaget()
     {
-        return 0;
-    }
+        float moveInZ1 = 0;
+        float moveX = (center.z - ball.position.z) / ball.velocity.z * ball.velocity.x;
+        float target1 = moveX + ball.position.x;
+        Vector3 psn = ball.position;
+            if (target1 < center.x + 12.5f && target1 > center.x - 12.5f)
+            {
+                return target1;
+            }
+            if (ball.velocity.x > 0)
+            {
+                moveInZ1 += (center.x + 12.5f) / ball.velocity.x * ball.velocity.z;
+                moveX = (center.z - psn.z - moveInZ1) / ball.velocity.z * (-ball.velocity.x);
+                target1 = center.x + 12.5f + moveX;
+            }
+            else
+            {
+                moveInZ1 += (center.x - 12.5f) / ball.velocity.x * ball.velocity.z;
+                moveX = (center.z - psn.z - moveInZ1) / ball.velocity.z * (-ball.velocity.x);
+                target1 = center.x - 12.5f + moveX;
+            }
+        return target1;
+    }*/
 }
