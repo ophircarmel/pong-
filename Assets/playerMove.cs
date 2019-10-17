@@ -21,7 +21,7 @@ public class playerMove : MonoBehaviour, IMoveBoardListener
     // </summary>
     void Start()
     {
-        transform.parent.parent.FindChild("Sphere").GetComponent<Move>().AddListener(this);
+        transform.parent.parent.Find("Sphere").GetComponent<Move>().AddListener(this);
         rg = transform.gameObject.GetComponent<Rigidbody>();
         if (gameObject.name == "player1")
         {
@@ -70,20 +70,31 @@ public class playerMove : MonoBehaviour, IMoveBoardListener
               //  rg.velocity = new Vector3(0, 0, 0);
             //}
     }
+
+
     // <summary>
     // Move to another board.
     // </summary>
     // <param name="prevoius"> The board to move from. </param>
     // <param name="next"> The board to move to. </param>
-    public void MoveBoard(int prevoius, int next)
+    public void MoveBoard(int previous, int next)
     {
         if ((transform.parent.name.Substring(11)[1] - '0')*3 + (transform.parent.name.Substring(11)[3] - '0') + 1 == next)
         {
+            // If the player is on the next board.
+
+            // Release movement.
             transform.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
         }
-        else
+        else if ((transform.parent.name.Substring(11)[1] - '0') * 3 + (transform.parent.name.Substring(11)[3] - '0') + 1 == previous)
         {
+            // If the player is on the previous board.
+
+            // Freeze movement.
             transform.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+
+            // Restart position.
+            transform.position = new Vector3(10, 0, transform.position.z);
         }
     }
 }
