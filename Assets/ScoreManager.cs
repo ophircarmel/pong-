@@ -14,8 +14,8 @@ public class ScoreManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        score1Text.transform.position = new Vector3(10f / (float)Screen.width + 80, Screen.height - 20 - 10f / (float)Screen.height, 0f);
-        score2Text.transform.position = new Vector3(Screen.width - 10f / (float)Screen.width, Screen.height - 20 - 10f / (float)Screen.height, 0f);
+        score1Text.transform.position = new Vector3(10f / (float)Screen.width + 180, Screen.height - 120 - 10f / (float)Screen.height, 0f);
+        score2Text.transform.position = new Vector3(Screen.width - 10f / (float)Screen.width, Screen.height - 120 - 10f / (float)Screen.height, 0f);
 
         script = GameObject.Find("Sphere").GetComponent<Move>();
 

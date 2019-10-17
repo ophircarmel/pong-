@@ -14,7 +14,7 @@ public class playerMove : MonoBehaviour, IMoveBoardListener
     // Insert values using unity api.
     public string up;
     public string down;
-
+    private float x;
 
     // <summary>
     // Start is called before the first frame update.
@@ -23,6 +23,7 @@ public class playerMove : MonoBehaviour, IMoveBoardListener
     {
         transform.parent.parent.Find("Sphere").GetComponent<Move>().AddListener(this);
         rg = transform.gameObject.GetComponent<Rigidbody>();
+        x = rg.position.x;
         if (gameObject.name == "player1")
         {
             up = setting.Player1Up;
@@ -92,7 +93,7 @@ public class playerMove : MonoBehaviour, IMoveBoardListener
             transform.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 
             // Restart position.
-            transform.position = new Vector3(10, 0, transform.position.z);
+            transform.position = new Vector3(x, 0, transform.position.z);
         }
     }
 }

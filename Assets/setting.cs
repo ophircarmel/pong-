@@ -41,4 +41,8 @@ public class setting : MonoBehaviour
     {
         Player2Down = p2down.text;
     }
+    public void set2players(bool is2p)
+    {
+        twoPlayers = is2p;
+    }
 }
