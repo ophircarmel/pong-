@@ -36,7 +36,7 @@ public class Move : MonoBehaviour, IMoveBoardListener
     // </summary>
     void Start()
     {
-        Debug.Log("start");
+        Debug.Log("start notice bla vla");
         if (score1 == score2 && score1 == 0)
         {
             // Add self as listener.
@@ -49,8 +49,18 @@ public class Move : MonoBehaviour, IMoveBoardListener
             // Set rigidbody component.
             rg = transform.gameObject.GetComponent<Rigidbody>();
             strPsn = transform.position;
-        }
 
+            ////Go();
+        }
+    }
+
+
+    // <summary>
+    // The ball starts moving.
+    // </summary>
+    public void Go()
+    {
+        Debug.Log("Go");
         // Set random val to indicate the directionof the ball to move.
         float rand = Random.Range(0, 2);
 
@@ -69,8 +79,10 @@ public class Move : MonoBehaviour, IMoveBoardListener
             dz = -dz;
         }
         //Debug.Log(rg.position + "and, " + rg.velocity);
-        //Debug.Log("start - end");
+        Debug.Log("Went");
     }
+
+
     public void AddListener(IMoveBoardListener l)
     {
         this.listeners.Add(l);
@@ -247,9 +259,9 @@ public class Move : MonoBehaviour, IMoveBoardListener
     {
         isIn = false;
     }
-    void countdown()
+    public void countdown()
     {
-        Invoke("Start", 3f);
+        Invoke("Go", 3f);
     }
 
 

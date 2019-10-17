@@ -15,7 +15,7 @@ public class ComputerMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (setting.twoPlayers)
+        if (transform.parent.parent.GetComponent<setting>().twoPlayers)
         {
             this.enabled = false;
         }

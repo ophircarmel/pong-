@@ -25,17 +25,17 @@ public class playerMove : MonoBehaviour, IMoveBoardListener
         rg = transform.gameObject.GetComponent<Rigidbody>();
         if (gameObject.name == "player1")
         {
-            up = setting.Player1Up;
-            down = setting.Player1Down;
+            up = transform.parent.parent.GetComponent<setting>().Player1Up;
+            down = transform.parent.parent.GetComponent<setting>().Player1Down;
         }
         else
         {
-            if (!setting.twoPlayers)
+            if (!transform.parent.parent.GetComponent<setting>().twoPlayers)
             {
                 this.enabled = false;
             }
-            up = setting.Player2Up;
-            down = setting.Player2Down;
+            up = transform.parent.parent.GetComponent<setting>().Player2Up;
+            down = transform.parent.parent.GetComponent<setting>().Player2Down;
         }
         if (!transform.parent.name.EndsWith("(1,1)"))
         {
@@ -70,6 +70,8 @@ public class playerMove : MonoBehaviour, IMoveBoardListener
               //  rg.velocity = new Vector3(0, 0, 0);
             //}
     }
+
+
     // <summary>
     // Move to another board.
     // </summary>
@@ -77,7 +79,7 @@ public class playerMove : MonoBehaviour, IMoveBoardListener
     // <param name="next"> The board to move to. </param>
     public void MoveBoard(int previous, int next)
     {
-        if ((transform.parent.name.Substring(11)[1] - '0') * 3 + (transform.parent.name.Substring(11)[3] - '0') + 1 == next)
+        if ((transform.parent.name.Substring(11)[1] - '0')*3 + (transform.parent.name.Substring(11)[3] - '0') + 1 == next)
         {
             // If the player is on the next board.
 

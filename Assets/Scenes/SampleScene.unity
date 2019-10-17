@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311912, g: 0.3807398, b: 0.3587271, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2097,8 +2097,9 @@ GameObject:
   - component: {fileID: 1968967689}
   - component: {fileID: 1968967688}
   - component: {fileID: 1968967687}
+  - component: {fileID: 1968967691}
   m_Layer: 5
-  m_Name: PlayButton
+  m_Name: StartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2222,6 +2223,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1968967685}
   m_CullTransparentMesh: 0
+--- !u!114 &1968967691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968967685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8d20dc4e690a55438dd6912d17a4d6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 1968967688}
+  sphere: {fileID: 0}
+  script: {fileID: 0}
 --- !u!1 &2049340578
 GameObject:
   m_ObjectHideFlags: 0
