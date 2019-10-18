@@ -14,6 +14,9 @@ public class setting : MonoBehaviour
     public InputField p1down;
     public InputField p2up;
     public InputField p2down;
+
+    public static float HardLevel;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,5 +59,10 @@ public class setting : MonoBehaviour
     public void set2players(bool is2p)
     {
             twoPlayers = is2p;
+    }
+
+    public void setHardLevel(Slider s)
+    {
+        HardLevel = s.value;
     }
 }

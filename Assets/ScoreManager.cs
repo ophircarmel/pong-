@@ -15,7 +15,7 @@ public class ScoreManager : MonoBehaviour
     void Start()
     {
         score1Text.transform.position = new Vector3(10f / (float)Screen.width + 180, Screen.height - 120 - 10f / (float)Screen.height, 0f);
-        score2Text.transform.position = new Vector3(Screen.width - 10f / (float)Screen.width, Screen.height - 120 - 10f / (float)Screen.height, 0f);
+        score2Text.transform.position = new Vector3(Screen.width - 100f, Screen.height - 120 - 10f / (float)Screen.height, 0f);
 
         script = GameObject.Find("Sphere").GetComponent<Move>();
 

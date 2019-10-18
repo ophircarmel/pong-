@@ -26,13 +26,13 @@ public class Move : MonoBehaviour, IMoveBoardListener
 
     // Start position of the ball.
     private Vector3 strPsn = new Vector3(10, 1, 25);
-    
+
     // Is a collision/ trigger occuring.
     private bool isIn = false;
 
     // A list of move board listeners.
     List<IMoveBoardListener> listeners = new List<IMoveBoardListener>();
-    
+
     // A list of destroyed walls.
     List<Collider> destroyed = new List<Collider>();
 
@@ -73,9 +73,9 @@ public class Move : MonoBehaviour, IMoveBoardListener
         }
 
 
-    // <summary>
-    // Add a listener to the moving board event.
-    // </summary>
+        // <summary>
+        // Add a listener to the moving board event.
+        // </summary>
     }
     public void AddListener(IMoveBoardListener l)
     {
@@ -98,12 +98,12 @@ public class Move : MonoBehaviour, IMoveBoardListener
         bool flag = true;
 
         Vector3 vel = new Vector3(dx, 0, dz);
-        
+
         // Cubes set on the sides of the board.
         string[] sideCubes = { "Cube (2)", "Cube (3)" };
 
         // Cubes set as goals.
-        string[] goalCubes = { "leftWall", "centerWall", "rightWall"};
+        string[] goalCubes = { "leftWall", "centerWall", "rightWall" };
 
         if (sideCubes.Contains(collision.collider.name))
         {
@@ -125,17 +125,17 @@ public class Move : MonoBehaviour, IMoveBoardListener
             else
             {
                 flag = false;
-                
+
                 // Make the collsion object uncolliadable anymore.
                 collision.collider.GetComponent<BoxCollider>().isTrigger = true;
-                
+
                 // Make the collision object unvisible anymore.
                 collision.collider.GetComponent<MeshRenderer>().enabled = false;
-                
+
                 // Add this collision object to the destroyed walls' list.
                 destroyed.Add(collision.collider);
-                
-                
+
+
                 vel.z = -vel.z;
                 dz = vel.z;
             }
@@ -146,7 +146,7 @@ public class Move : MonoBehaviour, IMoveBoardListener
         if (collision.collider.tag == "Player")
         {
             // If collision occured with a player
-        
+
             if (Mathf.Abs(collision.transform.position.x - transform.position.x) > 0.8)
             {
                 if (collision.transform.position.x > transform.position.x)
@@ -169,8 +169,8 @@ public class Move : MonoBehaviour, IMoveBoardListener
 
 
     }
-    
-    
+
+
     // <summary>
     // Handle the case of trigger is starting.
     // </summary>
@@ -204,7 +204,7 @@ public class Move : MonoBehaviour, IMoveBoardListener
             {
                 // Make the wall cllidable.
                 c.GetComponent<BoxCollider>().isTrigger = false;
-                
+
                 // Make it visible.
                 c.GetComponent<MeshRenderer>().enabled = true;
             }
@@ -224,7 +224,7 @@ public class Move : MonoBehaviour, IMoveBoardListener
             countdown();
             return;
         }
-        
+
         // Else
 
         int next = this.currentboard;
@@ -240,23 +240,24 @@ public class Move : MonoBehaviour, IMoveBoardListener
                 next -= 3;
             }
 
-            if (collider.name == "rightWall") {
-                 if (collider.transform.parent.parent.tag == "rightBoard")
-                 {
-                     next -= 2;
-                 }
-                 else
-                 {
-                     next += 1;
-                 }
-             }
-             else if (collider.name == "leftWall")
-             {
-                 if (collider.transform.parent.parent.tag == "leftBoard")
-                 {
-                     next += 2;
-                 }
-                 else
+            if (collider.name == "rightWall")
+            {
+                if (collider.transform.parent.parent.tag == "rightBoard")
+                {
+                    next -= 2;
+                }
+                else
+                {
+                    next += 1;
+                }
+            }
+            else if (collider.name == "leftWall")
+            {
+                if (collider.transform.parent.parent.tag == "leftBoard")
+                {
+                    next += 2;
+                }
+                else
                 {
                     next -= 1;
                 }
@@ -269,8 +270,8 @@ public class Move : MonoBehaviour, IMoveBoardListener
             countdown();
         }
     }
-    
-    
+
+
     // <summary>
     // Handle the event of collision is finished.
     // </summary>
@@ -280,8 +281,8 @@ public class Move : MonoBehaviour, IMoveBoardListener
         // Collision isn't occuring anymore.
         isIn = false;
     }
-    
-    
+
+
     // <summary>
     // Handle the event of trigger is finished.
     // </summary>
@@ -291,8 +292,8 @@ public class Move : MonoBehaviour, IMoveBoardListener
         // Trigger isn't occuring anymore.
         isIn = false;
     }
-    
-    
+
+
     // <summary>
     // Countdown and renew the game.
     // </summary>
@@ -336,10 +337,10 @@ public class Move : MonoBehaviour, IMoveBoardListener
 
         // Change start position according to the calculations.
         strPsn = new Vector3(nx, ny, nz);
-        
+
         // Set rigidbody position in the same position.
         rg.position = strPsn;
-        
+
         // Set velocity to zero.
         rg.velocity = Vector3.zero;
 
