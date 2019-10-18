@@ -9,22 +9,38 @@ public class ComputerMove : MonoBehaviour
     public const float dx = 2.5f;
     private Vector3 center;
 
-    // Rigidbody component.
+    // Rigidbody components.
     public Rigidbody rg;
     private Rigidbody ball;
-    // Start is called before the first frame update
+    
+    
+    // <summary>
+    // Start is called before the first frame update.
+    // Check if game is user vs computer.
+    // As well, declare some fields.
+    // </summary>
     void Start()
     {
         if (setting.twoPlayers)
         {
+            // Player 2 should not move using computer logic.
             this.enabled = false;
         }
+        
+        // Set rigidbody component.
         rg = transform.gameObject.GetComponent<Rigidbody>();
+        
+        // Set a pointer to the ball object.
         ball = transform.parent.transform.parent.Find("Sphere").GetComponent<Rigidbody>();
+        
+        // Set the center of the computer player.
         center = rg.position;
     }
 
-    // Update is called once per frame
+
+    // <summary>
+    // Update is called once per frame.
+    // </summary>
     void Update()
     {
         float target = ball.position.x;
