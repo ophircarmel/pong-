@@ -30,28 +30,28 @@ public class setting : MonoBehaviour
     }
     public void setPlayer1Up()
     {
-        if (p1up.text.Length > 0)
+        if (p1up != null && p1up.text.Length > 0)
             Player1Up = p1up.text;
         else
             Player1Up = "up";
     }
     public void setPlayer2Up()
     {
-        if (p2up.text.Length > 0)
+        if (p2up != null && p2up.text.Length > 0)
             Player2Up = p2up.text;
         else
             Player2Up = "w";
     }
     public void setPlayer1Down()
     {
-        if (p1down.text.Length > 0)
+        if (p1down != null && p1down.text.Length > 0)
             Player1Down = p1down.text;
         else
             Player1Down = "down";
     }
     public void setPlayer2Down()
     {
-        if (p2down.text.Length > 0)
+        if (p2up != null && p2down.text.Length > 0)
             Player2Down = p2down.text;
         else
             Player2Down = "s";
@@ -63,6 +63,18 @@ public class setting : MonoBehaviour
 
     public void setHardLevel(Slider s)
     {
-        HardLevel = s.value;
+        if (s != null)
+            HardLevel = s.value;
+        else
+            HardLevel = 50;
+    }
+    public void defaultAll()
+    {
+        Player1Down = "down";
+        Player1Up = "up";
+        Player2Down = "s";
+        Player2Up = "w";
+        twoPlayers = true;
+        HardLevel = 50;
     }
 }
