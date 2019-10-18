@@ -30,6 +30,7 @@ public class Move : MonoBehaviour, IMoveBoardListener
 
     // A list of move board listeners.
     List<IMoveBoardListener> listeners = new List<IMoveBoardListener>();
+    List<Collider> walls = new List<Collider>();
 
     // <summary>
     // Start is called before the first frame update.
@@ -111,37 +112,8 @@ public class Move : MonoBehaviour, IMoveBoardListener
         {
             //Debug.Log(collision.collider.name + ", " + collision.collider.transform.parent.name + ", " + collision.collider.transform.parent.transform.parent.name);
 
-            if (collision.collider.tag == "winWall")
-            {
-                // A goal is scored.
-                if ((collision.collider.transform.parent.name == "wall1"))
-                {
-                    // Player 2 has scored a goal, increase his score.
-                    this.score2++;
-
-                }
-                else
-                {
-                    // Player 1 has scored a goal, increase his score.
-                    this.score1++;
-                }
-                
-                // Relocate the ball.
-                rg.position = new Vector3(10, 0, 25);
-                strPsn = rg.position;
-
-                // Set ball's valocity as 0 for meantime.
-                rg.velocity = new Vector3(0, 0, 0);
-                // update camera location
-                //CameraManager manager = GameObject.Find("Main Camera").GetComponent<CameraManager>();
-                //manager.newCamPsn = new Vector3(10, 15, 25);
-                this.NotifyAll(currentboard, 5);
-                currentboard = 5;
-                // Wait a bit and start over.
-                countdown();
-                return;
-            }
-            else if ((collision.collider.transform.parent.name == "wall1" && dz > 0) || (collision.collider.transform.parent.name == "wall2" && dz < 0))
+            
+            if ((collision.collider.transform.parent.name == "wall1" && dz > 0) || (collision.collider.transform.parent.name == "wall2" && dz < 0))
             {
                 return;
             } else
@@ -149,6 +121,7 @@ public class Move : MonoBehaviour, IMoveBoardListener
                 flag = false;
                 collision.collider.GetComponent<BoxCollider>().isTrigger = true;
                 collision.collider.GetComponent<MeshRenderer>().enabled = false;
+                walls.Add(collision.collider);
                 vel.z = -vel.z;
                 dz = vel.z;
             }
@@ -190,7 +163,40 @@ public class Move : MonoBehaviour, IMoveBoardListener
         isIn = true;
         //Debug.Log("trig-start" + "\n" + strPsn);
         //Debug.Log(collider.name + ", " + collider.transform.parent.name + ", " + collider.transform.parent.transform.parent.tag);
+        if (collider.tag == "winWall")
+        {
+            // A goal is scored.
+            if ((collider.transform.parent.name == "wall1"))
+            {
+                // Player 2 has scored a goal, increase his score.
+                this.score2++;
 
+            }
+            else
+            {
+                // Player 1 has scored a goal, increase his score.
+                this.score1++;
+            }
+            foreach (Collider c in walls)
+            {
+                c.GetComponent<BoxCollider>().isTrigger = false;
+                c.GetComponent<MeshRenderer>().enabled = true;
+            }
+            // Relocate the ball.
+            rg.position = new Vector3(10, 0, 25);
+            strPsn = rg.position;
+
+            // Set ball's valocity as 0 for meantime.
+            rg.velocity = new Vector3(0, 0, 0);
+            // update camera location
+            //CameraManager manager = GameObject.Find("Main Camera").GetComponent<CameraManager>();
+            //manager.newCamPsn = new Vector3(10, 15, 25);
+            this.NotifyAll(currentboard, 5);
+            currentboard = 5;
+            // Wait a bit and start over.
+            countdown();
+            return;
+        }
         int next = this.currentboard;
         Debug.Log("startZZZ: " + next);
         if (collider.transform.parent.name == "wall1" || collider.transform.parent.name == "wall2")
