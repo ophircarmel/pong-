@@ -10,7 +10,7 @@ public class Move : MonoBehaviour, IMoveBoardListener
 
     private static readonly int BOARDLENGTH = 50;
 
-    // Current board.
+    // Current board. At first it is the middle board.
     private int currentboard = 5;
 
     // Velocity' variables.
@@ -37,7 +37,6 @@ public class Move : MonoBehaviour, IMoveBoardListener
     // </summary>
     void Start()
     {
-        Debug.Log("start");
         if (score1 == score2 && score1 == 0)
         {
             // Add self as listener.
@@ -45,8 +44,7 @@ public class Move : MonoBehaviour, IMoveBoardListener
 
             // Add camera as listener.
             this.listeners.Add((CameraManager)GameObject.Find("Main Camera").GetComponent<CameraManager>());
-            // Set current board to the middle one.
-            //this.currentboard = 5;
+
             // Set rigidbody component.
             rg = transform.gameObject.GetComponent<Rigidbody>();
             strPsn = transform.position;
@@ -69,18 +67,22 @@ public class Move : MonoBehaviour, IMoveBoardListener
             dx = -dx;
             dz = -dz;
         }
-        //Debug.Log(rg.position + "and, " + rg.velocity);
-        //Debug.Log("start - end");
+
+
+    // <summary>
+    // Add a listener to the moving board event.
+    // </summary>
     }
     public void AddListener(IMoveBoardListener l)
     {
+        // Add the listenr to the listeners' list.
         this.listeners.Add(l);
     }
+
 
     // <summary>
     // OnCollisionEnter is called when this collider/rigidbody has begun touching another rigidbody/collider.
     // </summary>
-
     // <param name="collision"> The collision object </param>
     public void OnCollisionEnter(Collision collision)
     {
@@ -88,7 +90,6 @@ public class Move : MonoBehaviour, IMoveBoardListener
         {
             return;
         }
-        //Debug.Log("col" + "\n" + transform.position.x);
 
         bool flag = true;
 
@@ -110,9 +111,6 @@ public class Move : MonoBehaviour, IMoveBoardListener
 
         if (goalCubes.Contains(collision.collider.name))
         {
-            //Debug.Log(collision.collider.name + ", " + collision.collider.transform.parent.name + ", " + collision.collider.transform.parent.transform.parent.name);
-
-            
             if ((collision.collider.transform.parent.name == "wall1" && dz > 0) || (collision.collider.transform.parent.name == "wall2" && dz < 0))
             {
                 return;
@@ -150,7 +148,6 @@ public class Move : MonoBehaviour, IMoveBoardListener
         {
             rg.velocity = vel;
         }
-        //Debug.Log("col-end");
 
 
     }
@@ -161,8 +158,6 @@ public class Move : MonoBehaviour, IMoveBoardListener
             return;
         }
         isIn = true;
-        //Debug.Log("trig-start" + "\n" + strPsn);
-        //Debug.Log(collider.name + ", " + collider.transform.parent.name + ", " + collider.transform.parent.transform.parent.tag);
         if (collider.tag == "winWall")
         {
             // A goal is scored.
@@ -187,18 +182,19 @@ public class Move : MonoBehaviour, IMoveBoardListener
             strPsn = rg.position;
 
             // Set ball's valocity as 0 for meantime.
-            rg.velocity = new Vector3(0, 0, 0);
-            // update camera location
-            //CameraManager manager = GameObject.Find("Main Camera").GetComponent<CameraManager>();
-            //manager.newCamPsn = new Vector3(10, 15, 25);
+            rg.velocity = Vector3.zero;
+
+            // After a win, moving to the middle board.
             this.NotifyAll(currentboard, 5);
             currentboard = 5;
+
             // Wait a bit and start over.
             countdown();
             return;
         }
+
         int next = this.currentboard;
-        Debug.Log("startZZZ: " + next);
+
         if (collider.transform.parent.name == "wall1" || collider.transform.parent.name == "wall2")
         {
             if ((collider.transform.parent.name == "wall1"))
