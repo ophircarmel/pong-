@@ -27,22 +27,34 @@ public class setting : MonoBehaviour
     }
     public void setPlayer1Up()
     {
-        Player1Up = p1up.text;
+        if (p1up.text.Length > 0)
+            Player1Up = p1up.text;
+        else
+            Player1Up = "up";
     }
     public void setPlayer2Up()
     {
-        Player2Up = p2up.text;
+        if (p2up.text.Length > 0)
+            Player2Up = p2up.text;
+        else
+            Player2Up = "w";
     }
     public void setPlayer1Down()
     {
-        Player1Down = p1down.text;
+        if (p1down.text.Length > 0)
+            Player1Down = p1down.text;
+        else
+            Player1Down = "down";
     }
     public void setPlayer2Down()
     {
-        Player2Down = p2down.text;
+        if (p2down.text.Length > 0)
+            Player2Down = p2down.text;
+        else
+            Player2Down = "s";
     }
     public void set2players(bool is2p)
     {
-        twoPlayers = is2p;
+            twoPlayers = is2p;
     }
 }
