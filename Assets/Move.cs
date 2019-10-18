@@ -157,7 +157,9 @@ public class Move : MonoBehaviour, IMoveBoardListener
         {
             return;
         }
+
         isIn = true;
+
         if (collider.tag == "winWall")
         {
             // A goal is scored.
@@ -172,11 +174,16 @@ public class Move : MonoBehaviour, IMoveBoardListener
                 // Player 1 has scored a goal, increase his score.
                 this.score1++;
             }
+
             foreach (Collider c in walls)
             {
+                // Make the wall cllidable.
                 c.GetComponent<BoxCollider>().isTrigger = false;
+                
+                // Make it visible.
                 c.GetComponent<MeshRenderer>().enabled = true;
             }
+
             // Relocate the ball.
             rg.position = new Vector3(10, 0, 25);
             strPsn = rg.position;
@@ -192,6 +199,8 @@ public class Move : MonoBehaviour, IMoveBoardListener
             countdown();
             return;
         }
+        
+        // Else
 
         int next = this.currentboard;
 
@@ -227,31 +236,45 @@ public class Move : MonoBehaviour, IMoveBoardListener
                     next -= 1;
                 }
             }
-            /*strPsn = new Vector3(x, 0, z);
-            rg.position = strPsn;
-            rg.velocity = new Vector3(0, 0, 0);
 
-            // update camera location
-            CameraManager manager = GameObject.Find("Main Camera").GetComponent<CameraManager>();
-            manager.newCamPsn = new Vector3(x, 15, z);*/
-            Debug.Log(next);
+            // Let all listeners know that we arre moving board.
             this.NotifyAll(currentboard, next);
 
-            //Debug.Log("trig-end");
+            //Countdown and renew the game.
             countdown();
         }
     }
+    
+    
+    // <summary>
+    // Handle the event of collision is finished.
+    // </summary>
+    // <param name="collision"> The collision object </param>
     void OnCollisionExit(Collision collision)
     {
+        // Collision isn't occuring anymore.
         isIn = false;
     }
+    
+    
+    // <summary>
+    // Handle the event of trigger is finished.
+    // </summary>
+    // <param name="collision"> The collision object </param>
     void OnTriggerExit(Collider other)
     {
+        // Trigger isn't occuring anymore.
         isIn = false;
     }
+    
+    
+    // <summary>
+    // Countdown and renew the game.
+    // </summary>
     void countdown()
     {
-        Invoke("Start", 3f);
+        float seconds = 3f;
+        Invoke("Start", seconds);
     }
 
 
@@ -264,6 +287,7 @@ public class Move : MonoBehaviour, IMoveBoardListener
     {
         foreach (IMoveBoardListener listener in listeners)
         {
+            // For each listener, notify to move a board.
             listener.MoveBoard(previous, next);
         }
     }
@@ -285,10 +309,14 @@ public class Move : MonoBehaviour, IMoveBoardListener
         int ny = 0;
         float nz = (1 - boardz) * (BOARDLENGTH + 1) + BOARDLENGTH / 2;
 
+        // Change start position according to the calculations.
         strPsn = new Vector3(nx, ny, nz);
-        //Debug.Log(strPsn);
+        
+        // Set rigidbody position in the same position.
         rg.position = strPsn;
-        rg.velocity = new Vector3(0, 0, 0);
+        
+        // Set velocity to zero.
+        rg.velocity = Vector3.zero;
 
         // Update current board.
         this.currentboard = next;
