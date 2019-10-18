@@ -26,11 +26,15 @@ public class Move : MonoBehaviour, IMoveBoardListener
 
     // Start position of the ball.
     private Vector3 strPsn = new Vector3(10, 1, 25);
+    
+    // Is a collision/ trigger occuring.
     private bool isIn = false;
 
     // A list of move board listeners.
     List<IMoveBoardListener> listeners = new List<IMoveBoardListener>();
-    List<Collider> walls = new List<Collider>();
+    
+    // A list of destroyed walls.
+    List<Collider> destroyed = new List<Collider>();
 
     // <summary>
     // Start is called before the first frame update.
@@ -121,9 +125,17 @@ public class Move : MonoBehaviour, IMoveBoardListener
             else
             {
                 flag = false;
+                
+                // Make the collsion object uncolliadable anymore.
                 collision.collider.GetComponent<BoxCollider>().isTrigger = true;
+                
+                // Make the collision object unvisible anymore.
                 collision.collider.GetComponent<MeshRenderer>().enabled = false;
-                walls.Add(collision.collider);
+                
+                // Add this collision object to the destroyed walls' list.
+                destroyed.Add(collision.collider);
+                
+                
                 vel.z = -vel.z;
                 dz = vel.z;
             }
@@ -133,6 +145,8 @@ public class Move : MonoBehaviour, IMoveBoardListener
         }
         if (collision.collider.tag == "Player")
         {
+            // If collision occured with a player
+        
             if (Mathf.Abs(collision.transform.position.x - transform.position.x) > 0.8)
             {
                 if (collision.transform.position.x > transform.position.x)
@@ -155,6 +169,12 @@ public class Move : MonoBehaviour, IMoveBoardListener
 
 
     }
+    
+    
+    // <summary>
+    // Handle the case of trigger is starting.
+    // </summary>
+    // <param name="collision"> The collision object </param>
     public void OnTriggerEnter(Collider collider)
     {
         if (collider.name == "Plane" || isIn)
@@ -162,6 +182,7 @@ public class Move : MonoBehaviour, IMoveBoardListener
             return;
         }
 
+        // A trigger starts.
         isIn = true;
 
         if (collider.tag == "winWall")
@@ -179,7 +200,7 @@ public class Move : MonoBehaviour, IMoveBoardListener
                 this.score1++;
             }
 
-            foreach (Collider c in walls)
+            foreach (Collider c in destroyed)
             {
                 // Make the wall cllidable.
                 c.GetComponent<BoxCollider>().isTrigger = false;
