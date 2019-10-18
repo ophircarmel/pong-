@@ -111,10 +111,14 @@ public class Move : MonoBehaviour, IMoveBoardListener
 
         if (goalCubes.Contains(collision.collider.name))
         {
+            // A goal is scored.
+
             if ((collision.collider.transform.parent.name == "wall1" && dz > 0) || (collision.collider.transform.parent.name == "wall2" && dz < 0))
             {
+                // Collision has occured from the other side (the ball comes from another board).
                 return;
-            } else
+            }
+            else
             {
                 flag = false;
                 collision.collider.GetComponent<BoxCollider>().isTrigger = true;
