@@ -16,6 +16,7 @@ public class setting : MonoBehaviour
     public InputField p2down;
 
     public static float HardLevel;
+    internal static int score = 3;
 
     // Start is called before the first frame update
     void Start()
