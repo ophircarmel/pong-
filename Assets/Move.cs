@@ -31,14 +31,16 @@ public class Move : MonoBehaviour, IMoveBoardListener
 
     // A list of destroyed walls.
     List<Collider> destroyed = new List<Collider>();
+    private bool first = true;
 
     // <summary>
     // Start is called before the first frame update.
     // </summary>
     void Start()
     {
-        if (score1 == score2 && score1 == 0)
+        if (score1 == score2 && score1 == 0 && first)
         {
+            first = false;
             // Add self as listener.
             this.listeners.Add(this);
 
@@ -89,6 +91,7 @@ public class Move : MonoBehaviour, IMoveBoardListener
     // <param name="collision"> The collision object </param>
     public void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("col-pos:" + transform.position);
         if (isIn)
         {
             return;
@@ -160,6 +163,7 @@ public class Move : MonoBehaviour, IMoveBoardListener
             }
             this.dz *= -1;
             vel.z = dz;
+            rg.position += rg.velocity / 20;
         }
         if (flag)
         {
@@ -346,5 +350,8 @@ public class Move : MonoBehaviour, IMoveBoardListener
         // Update current board.
         this.currentboard = next;
     }
-
+    void update()
+    {
+        transform.GetComponent<Rigidbody>().velocity = new Vector3(dx, 0, dz); 
+    }
 }

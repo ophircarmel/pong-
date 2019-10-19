@@ -49,7 +49,7 @@ public class ComputerMove : MonoBehaviour
     // </summary>
     void Update()
     {
-        float rand = Random.Range(0, 100);
+        float rand = Random.Range(0, 101);
         bool isCenter = false;
         if (ball.velocity.z <= 0 || (ball.position.x > center.x + 12.5) || (ball.position.x < center.x - 12.5) || ball.position.z > rg.position.z || ball.position.z - rg.position.z < -48)
         {

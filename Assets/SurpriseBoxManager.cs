@@ -159,9 +159,9 @@ public class SurpriseBoxManager : MonoBehaviour, IMoveBoardListener
         // return sphere scale to normal
         GameObject.Find("Sphere").transform.localScale = Vector3.one;
 
-        for (int i = 1; i < 3; i++)
+        for (int i = 0; i < 3; i++)
         {
-            for (int j = 1; j < 3; j++)
+            for (int j = 0; j < 3; j++)
             {
                 GameObject board = GameObject.Find("GameObject (" + i + "," + j + ")");
                 GameObject player1 = board.transform.Find("player1").gameObject;
@@ -210,8 +210,8 @@ public class SurpriseBoxManager : MonoBehaviour, IMoveBoardListener
 
         // if collided with ball
 
-        int boardz = (currBoard - 1) / 3;
-        int boardx = (currBoard - 1) % 3;
+        int boardx = (currBoard - 1) / 3;
+        int boardz = (currBoard - 1) % 3;
 
         // make effect
         effectTime = Constants.EFFECT_TIME;
@@ -245,7 +245,7 @@ public class SurpriseBoxManager : MonoBehaviour, IMoveBoardListener
         {
             // neutral box
             case 0:
-                int rand0 = Random.Range(0, 6);
+                int rand0 = Random.Range(0, 7);
 
                 Vector3 scale = sphere.transform.localScale;
                 switch (rand0)
@@ -336,7 +336,7 @@ public class SurpriseBoxManager : MonoBehaviour, IMoveBoardListener
 
             case 1:
 
-                int rand1 = Random.Range(0, 4);
+                int rand1 = Random.Range(0, 5);
 
                 // helps player 1
                 switch (rand1)
@@ -391,7 +391,7 @@ public class SurpriseBoxManager : MonoBehaviour, IMoveBoardListener
                 break;
 
             case 2:
-                int rand2 = Random.Range(0, 4);
+                int rand2 = Random.Range(0, 5);
 
                 // helps player 2
                 switch (rand2)
@@ -481,14 +481,14 @@ public class SurpriseBoxManager : MonoBehaviour, IMoveBoardListener
         zMax -= GameObject.Find("wall1").transform.localScale.z;
 
         // random in board
-        float randx = Random.Range(xMin, xMax);
+        float randx = Random.Range(xMin + 3, xMax - 3);
 
       //  Debug.Log(nx + " " + nz);
 
        // Debug.Log("xrange - " + xMin + " " + xMax + " " + randx);
 
         // random in board z
-        float randz = Random.Range(zMin, zMax);
+        float randz = Random.Range(zMin + 3, zMax - 3);
 
        // Debug.Log("zrange - " + zMin + " " + zMax + " " + randz);
 
