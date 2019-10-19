@@ -77,5 +77,10 @@ public class setting : MonoBehaviour
         Player2Up = "w";
         twoPlayers = true;
         HardLevel = 50;
+        score = 3;
+    }
+    public void setScore(InputField s)
+    {
+        score = int.Parse(s.text);
     }
 }
