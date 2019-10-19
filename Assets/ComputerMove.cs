@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 public class ComputerMove : MonoBehaviour
 {
     // Paddle's velocity.
-    public const float dx = 2.5f;
+    public float dx = 2.5f;
     private Vector3 center;
 
     // Rigidbody components.

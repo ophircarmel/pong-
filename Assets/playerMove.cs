@@ -6,7 +6,7 @@ using UnityEngine;
 public class playerMove : MonoBehaviour, IMoveBoardListener
 {
     // Paddle's velocity.
-    public const float dx = 2.5f;
+    public float dx = Constants.PLAYER_SPEED;
 
     // Rigidbody component.
     public Rigidbody rg;

@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour, IMoveBoardListener
 {
-    private static readonly int CAMERAHEIGHT = 15;
-
-    private static readonly int BOARDWIDTH = 25;
-
-    private static readonly int BOARDLENGTH = 50;
-
     private float camSpeed = 20f;
 
     public Vector3 newCamPsn;
@@ -45,9 +39,9 @@ public class CameraManager : MonoBehaviour, IMoveBoardListener
         int boardx = (next - 1) % 3;
 
         // Calculate next position of the camera.
-        float nx = (boardx - 1) * (BOARDWIDTH + 1) + BOARDWIDTH / 2;
-        int ny = CAMERAHEIGHT;
-        float nz = (1 - boardz) * (BOARDLENGTH + 1) + BOARDLENGTH / 2;
+        float nx = (boardx - 1) * (Constants.BOARDWIDTH + 1) + Constants.BOARDWIDTH / 2;
+        int ny = Constants.CAMERAHEIGHT;
+        float nz = (1 - boardz) * (Constants.BOARDLENGTH + 1) + Constants.BOARDLENGTH / 2;
 
         this.newCamPsn = new Vector3(nx, ny, nz);
     }

@@ -6,10 +6,6 @@ using UnityEngine;
 
 public class Move : MonoBehaviour, IMoveBoardListener
 {
-    private static readonly int BOARDWIDTH = 25;
-
-    private static readonly int BOARDLENGTH = 50;
-
     // Current board. At first it is the middle board.
     private int currentboard = 5;
 
@@ -48,6 +44,9 @@ public class Move : MonoBehaviour, IMoveBoardListener
 
             // Add camera as listener.
             this.listeners.Add((CameraManager)GameObject.Find("Main Camera").GetComponent<CameraManager>());
+
+            // add surprise box as listener
+            this.listeners.Add((SurpriseBoxManager)GameObject.Find("SurpriseBox").GetComponent<SurpriseBoxManager>());
 
             // Set rigidbody component.
             rg = transform.gameObject.GetComponent<Rigidbody>();
@@ -141,7 +140,7 @@ public class Move : MonoBehaviour, IMoveBoardListener
             }
 
             rg.velocity = vel;
-            rg.position += rg.velocity / 100;
+            rg.position += rg.velocity / 20;
         }
         if (collision.collider.tag == "Player")
         {
@@ -331,9 +330,9 @@ public class Move : MonoBehaviour, IMoveBoardListener
         int boardx = (next - 1) % 3;
 
         // Calculate next position of the camera.
-        float nx = (boardx - 1) * (BOARDWIDTH + 1) + BOARDWIDTH / 2;
+        float nx = (boardx - 1) * (Constants.BOARDWIDTH + 1) + Constants.BOARDWIDTH / 2;
         int ny = 0;
-        float nz = (1 - boardz) * (BOARDLENGTH + 1) + BOARDLENGTH / 2;
+        float nz = (1 - boardz) * (Constants.BOARDLENGTH + 1) + Constants.BOARDLENGTH / 2;
 
         // Change start position according to the calculations.
         strPsn = new Vector3(nx, ny, nz);
