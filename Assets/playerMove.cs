@@ -1,12 +1,12 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 
-public class playerMove : NetworkBehaviour, IMoveBoardListener
+public class playerMove : MonoBehaviour, IMoveBoardListener, ballListeners
 {
     // Paddle's velocity.
-    public const float dx = 2.5f;
+    public float dx = Constants.PLAYER_SPEED;
 
     // Rigidbody component.
     public Rigidbody rg;
@@ -16,19 +16,24 @@ public class playerMove : NetworkBehaviour, IMoveBoardListener
     public string down;
     private float x;
 
-
     // <summary>
     // Start is called before the first frame update.
     // </summary>
     void Start()
     {
-        transform.parent.parent.Find("Sphere").GetComponent<Move>().AddListener(this);
+        transform.parent.parent.Find("ballListenersHolder").GetComponent<holdListeners>().AddListener(this);
         rg = transform.gameObject.GetComponent<Rigidbody>();
         x = rg.position.x;
         if (gameObject.name == "player1")
         {
-            up = setting.Player1Up;
-            down = setting.Player1Down;
+            if (setting.local) {
+                up = setting.Player1Up;
+                down = setting.Player1Down;
+            } else
+            {
+                up = "up";
+                down = "down";
+            }
         }
         else
         {
@@ -36,8 +41,16 @@ public class playerMove : NetworkBehaviour, IMoveBoardListener
             {
                 this.enabled = false;
             }
-            up = setting.Player2Up;
-            down = setting.Player2Down;
+            if (setting.local)
+            {
+                up = setting.Player2Up;
+                down = setting.Player2Down;
+            }
+            else
+            {
+                up = "w";
+                down = "s";
+            }
         }
         if (!transform.parent.name.EndsWith("(1,1)"))
         {
@@ -52,16 +65,14 @@ public class playerMove : NetworkBehaviour, IMoveBoardListener
     // </summary>
     void Update()
     {
-        if (hasAuthority)
-        {
             if (Input.GetKey(down))
             {
-                // Move down, according to user's input.
+                // Move right, according to user's input.
                 rg.velocity = new Vector3(dx, 0, 0); ;
             }
             else if (Input.GetKey(up))
             {
-                // Move up, according to user's input.
+                // Move left, according to user's input.
                 rg.velocity = new Vector3(-dx, 0, 0);
             }
             else
@@ -69,10 +80,11 @@ public class playerMove : NetworkBehaviour, IMoveBoardListener
                 // Another key is not acceptable, don't move.
                 rg.velocity = new Vector3(0, 0, 0);
             }
-        }
+            //if (Input.GetKeyUp(up) || Input.GetKeyUp(down))
+            //{
+              //  rg.velocity = new Vector3(0, 0, 0);
+            //}
     }
-
-
     // <summary>
     // Move to another board.
     // </summary>
@@ -97,5 +109,10 @@ public class playerMove : NetworkBehaviour, IMoveBoardListener
             // Restart position.
             transform.position = new Vector3(x, 0, transform.position.z);
         }
+    }
+
+    public void heBorn()
+    {
+        
     }
 }
