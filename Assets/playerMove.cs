@@ -1,12 +1,12 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class playerMove : MonoBehaviour, IMoveBoardListener
+public class playerMove : NetworkBehaviour, IMoveBoardListener
 {
     // Paddle's velocity.
-    public float dx = Constants.PLAYER_SPEED;
+    public const float dx = 2.5f;
 
     // Rigidbody component.
     public Rigidbody rg;
@@ -15,6 +15,7 @@ public class playerMove : MonoBehaviour, IMoveBoardListener
     public string up;
     public string down;
     private float x;
+
 
     // <summary>
     // Start is called before the first frame update.
@@ -51,14 +52,16 @@ public class playerMove : MonoBehaviour, IMoveBoardListener
     // </summary>
     void Update()
     {
+        if (hasAuthority)
+        {
             if (Input.GetKey(down))
             {
-                // Move right, according to user's input.
+                // Move down, according to user's input.
                 rg.velocity = new Vector3(dx, 0, 0); ;
             }
             else if (Input.GetKey(up))
             {
-                // Move left, according to user's input.
+                // Move up, according to user's input.
                 rg.velocity = new Vector3(-dx, 0, 0);
             }
             else
@@ -66,11 +69,10 @@ public class playerMove : MonoBehaviour, IMoveBoardListener
                 // Another key is not acceptable, don't move.
                 rg.velocity = new Vector3(0, 0, 0);
             }
-            //if (Input.GetKeyUp(up) || Input.GetKeyUp(down))
-            //{
-              //  rg.velocity = new Vector3(0, 0, 0);
-            //}
+        }
     }
+
+
     // <summary>
     // Move to another board.
     // </summary>
