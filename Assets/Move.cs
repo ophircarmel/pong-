@@ -354,14 +354,15 @@ public class Move : MonoBehaviour, IMoveBoardListener
     }
     void update()
     {
-        transform.GetComponent<Rigidbody>().velocity = new Vector3(dx, 0, dz); 
+        transform.GetComponent<Rigidbody>().velocity = new Vector3(dx, 0, dz);
     }
     void getListeners()
     {
         foreach (ballListeners bl in holder.list) {
             this.listeners.Add(bl);
             bl.heBorn();
-            Debug.Log(bl.ToString());
+            Debug.Log(bl.ToString() + " " + ((playerMove)(bl)).transform.parent.name);
         }
+        holder.list = new List<ballListeners>();
     }
 }

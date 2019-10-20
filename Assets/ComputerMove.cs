@@ -32,7 +32,10 @@ public class ComputerMove : MonoBehaviour, ballListeners
         {
             difficulty = setting.HardLevel;
         }
-
+        if (transform.parent.parent.Find("Sphere"))
+        {
+            ball = transform.parent.transform.parent.Find("Sphere").GetComponent<Rigidbody>();
+        }
         // Set rigidbody component.
         rg = transform.gameObject.GetComponent<Rigidbody>();
         transform.parent.parent.Find("ballListenersHolder").GetComponent<holdListeners>().AddListener(this);

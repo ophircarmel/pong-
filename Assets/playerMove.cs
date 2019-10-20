@@ -24,6 +24,10 @@ public class playerMove : MonoBehaviour, IMoveBoardListener, ballListeners
         transform.parent.parent.Find("ballListenersHolder").GetComponent<holdListeners>().AddListener(this);
         rg = transform.gameObject.GetComponent<Rigidbody>();
         x = rg.position.x;
+        if (transform.parent.parent.Find("Sphere"))
+        {
+            transform.parent.parent.Find("Sphere").GetComponent<Move>().AddListener(this);
+        }
         if (gameObject.name == "player1")
         {
             if (setting.local) {
