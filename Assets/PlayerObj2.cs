@@ -27,7 +27,8 @@ public class PlayerObj2 : NetworkBehaviour, IMoveBoardListener
             // Spawn the player (with authority) to the relevant user only.
             CmdSpawnPlayer2();
 
-            GameObject.Find("Sphere").transform.GetComponent<Move>().AddListener(this);
+            // Add self as listener to mmoving board event.
+            GameObject.Find("Sphere").GetComponent<Move>().AddListener(this);
         }
     }
 

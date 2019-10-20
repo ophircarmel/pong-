@@ -9,6 +9,11 @@ public class NetworkCustom : NetworkManager
     public GameObject playerObj1;
     public GameObject playerObj2;
 
+    public GameObject spherePrefab;
+
+    public GameObject player1;
+    public GameObject player2;
+
     public short onlinePlayers = 0;
 
 
@@ -19,10 +24,20 @@ public class NetworkCustom : NetworkManager
 
         if (onlinePlayers == 0)
         {
+            // Inastiate player 1.
             playerObj = Instantiate(playerObj1);
+
+            // Inastiate the ball.
+            GameObject sphere = Instantiate(spherePrefab);
+
+            // Set game as its parent.
+            sphere.transform.parent = GameObject.Find("Game").transform;
+
+            NetworkServer.Spawn(sphere);
         }
         else if (onlinePlayers == 1)
         {
+            // Inastiate player 2.
             playerObj = Instantiate(playerObj2);
         }
         else

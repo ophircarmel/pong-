@@ -27,7 +27,8 @@ public class PlayerObj1 : NetworkBehaviour, IMoveBoardListener
             // Spawn the player (with authority) to the relevant user only.
             CmdSpawnPlayer1();
 
-            GameObject.Find("Sphere").transform.GetComponent<Move>().AddListener(this);
+            // Add self as listener to mmoving board event.
+            GameObject.Find("Sphere").GetComponent<Move>().AddListener(this);
         }
     }
 
@@ -101,6 +102,7 @@ public class PlayerObj1 : NetworkBehaviour, IMoveBoardListener
     // <param name="next"> The board to move to. </param>
     public void MoveBoard(int previous, int next)
     {
+        Debug.Log("Has been called");
         xCurrent = (next - 1) / 3;
         yCurrent = (next - 1) % 3;
     }

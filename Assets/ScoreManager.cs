@@ -26,6 +26,10 @@ public class ScoreManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (script == null)
+        {
+            script = GameObject.Find("Sphere").GetComponent<Move>();
+        }
         score1Text.text = "Player 1: " + script.score1;
         score2Text.text = "Player 2: " + script.score2;
     }

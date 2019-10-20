@@ -2092,8 +2092,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rg: {fileID: 0}
-  up: 
-  down: 
+  up: up
+  down: down
 --- !u!114 &202468084986321493
 MonoBehaviour:
   m_ObjectHideFlags: 0

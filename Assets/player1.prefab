@@ -6090,8 +6090,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rg: {fileID: 0}
-  up: 
-  down: 
+  up: up
+  down: down
 --- !u!54 &8473163004644831346
 Rigidbody:
   m_ObjectHideFlags: 0
