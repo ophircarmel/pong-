@@ -17,6 +17,7 @@ public class setting : MonoBehaviour
 
     public static float HardLevel;
     internal static int score = 3;
+    public static bool local = true;
 
     // Start is called before the first frame update
     void Start()
@@ -59,7 +60,7 @@ public class setting : MonoBehaviour
     }
     public void set2players(bool is2p)
     {
-            twoPlayers = is2p;
+            twoPlayers = !is2p;
     }
 
     public void setHardLevel(Slider s)
@@ -78,9 +79,14 @@ public class setting : MonoBehaviour
         twoPlayers = true;
         HardLevel = 50;
         score = 3;
+        local = true;
     }
     public void setScore(InputField s)
     {
         score = int.Parse(s.text);
+    }
+    public void setLocal(bool isLocal)
+    {
+        local = isLocal;
     }
 }
