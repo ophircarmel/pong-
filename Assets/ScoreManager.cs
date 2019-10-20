@@ -44,6 +44,10 @@ public class ScoreManager : MonoBehaviour, ballListeners
     // Update is called once per frame
     void Update()
     {
+        if (script == null)
+        {
+            return;
+        }
         score1Text.text = "Player 1: " + script.score1;
         score2Text.text = "Player 2: " + script.score2;
         if (script.score1 == score || script.score2 == score)

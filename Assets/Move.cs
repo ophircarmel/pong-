@@ -40,6 +40,7 @@ public class Move : MonoBehaviour, IMoveBoardListener
     {
         if (score1 == score2 && score1 == 0 && first)
         {
+            getListeners();
             first = false;
             // Add self as listener.
             this.listeners.Add(this);
@@ -53,6 +54,7 @@ public class Move : MonoBehaviour, IMoveBoardListener
             // Set rigidbody component.
             rg = transform.gameObject.GetComponent<Rigidbody>();
             strPsn = transform.position;
+            
         }
 
         // Set random val to indicate the directionof the ball to move.
@@ -359,6 +361,7 @@ public class Move : MonoBehaviour, IMoveBoardListener
         foreach (ballListeners bl in holder.list) {
             this.listeners.Add(bl);
             bl.heBorn();
+            Debug.Log(bl.ToString());
         }
     }
 }

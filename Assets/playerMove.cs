@@ -113,6 +113,6 @@ public class playerMove : MonoBehaviour, IMoveBoardListener, ballListeners
 
     public void heBorn()
     {
-        
+        transform.parent.parent.Find("Sphere").GetComponent<Move>().AddListener(this);
     }
 }

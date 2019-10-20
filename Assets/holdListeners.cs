@@ -19,5 +19,6 @@ public class holdListeners : MonoBehaviour
     public void AddListener(ballListeners go)
     {
         list.Add(go);
+        Debug.Log(go.ToString());
     }
 }
