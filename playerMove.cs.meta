@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 2d1e077dc33c8bd47949ef8b5a281d87
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - rg: {instanceID: 0}
+  - sphere: {fileID: 443507354625731265, guid: c63957fbfd3c1cd4fba1951d7e0a962e, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

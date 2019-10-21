@@ -1,12 +1,12 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class playerMove : MonoBehaviour, IMoveBoardListener, ballListeners
+public class playerMove : NetworkBehaviour, IMoveBoardListener
 {
     // Paddle's velocity.
-    public float dx = Constants.PLAYER_SPEED;
+    public const float dx = 2.5f;
 
     // Rigidbody component.
     public Rigidbody rg;
@@ -16,24 +16,23 @@ public class playerMove : MonoBehaviour, IMoveBoardListener, ballListeners
     public string down;
     private float x;
 
+    public GameObject sphere;
+    
+    private int currBoard;
+
     // <summary>
     // Start is called before the first frame update.
     // </summary>
     void Start()
     {
-        transform.parent.parent.Find("ballListenersHolder").GetComponent<holdListeners>().AddListener(this);
+        currBoard = 5;
+        sphere.GetComponent<Move>().AddListener(this);
         rg = transform.gameObject.GetComponent<Rigidbody>();
         x = rg.position.x;
         if (gameObject.name == "player1")
         {
-            if (setting.local) {
-                up = setting.Player1Up;
-                down = setting.Player1Down;
-            } else
-            {
-                up = "up";
-                down = "down";
-            }
+            up = setting.Player1Up;
+            down = setting.Player1Down;
         }
         else
         {
@@ -41,18 +40,10 @@ public class playerMove : MonoBehaviour, IMoveBoardListener, ballListeners
             {
                 this.enabled = false;
             }
-            if (setting.local)
-            {
-                up = setting.Player2Up;
-                down = setting.Player2Down;
-            }
-            else
-            {
-                up = "w";
-                down = "s";
-            }
+            up = setting.Player2Up;
+            down = setting.Player2Down;
         }
-        if (!transform.parent.name.EndsWith("(1,1)"))
+        if (currBoard != 5)
         {
             transform.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         }
@@ -65,26 +56,49 @@ public class playerMove : MonoBehaviour, IMoveBoardListener, ballListeners
     // </summary>
     void Update()
     {
+        if (hasAuthority)
+        {
+            // Note: given a board indexed as n, the board is GameObject((n-1)/3, (n-1)%3).
+            int boardx = (currBoard - 1) % 3;
+
+            // Calculate next position of the camera.
+            float nx = (1 - boardx) * (Constants.BOARDWIDTH + 1) + Constants.BOARDWIDTH / 2;
+
             if (Input.GetKey(down))
             {
-                // Move right, according to user's input.
-                rg.velocity = new Vector3(dx, 0, 0); ;
+                float test = nx + Constants.BOARDWIDTH / 2 - transform.parent.Find("Cube (3)").localScale.x - transform.localScale.x / 2;
+                if (transform.position.x + dx < nx + Constants.BOARDWIDTH / 2 - transform.parent.Find("Cube (3)").localScale.x - transform.localScale.x / 2)
+                {
+                    // Move down, according to user's input.
+                    rg.velocity = new Vector3(dx, 0, 0);
+                }
+                else
+                {
+                    rg.velocity = Vector3.zero;
+                }
             }
             else if (Input.GetKey(up))
             {
-                // Move left, according to user's input.
-                rg.velocity = new Vector3(-dx, 0, 0);
+                float test = nx - Constants.BOARDWIDTH / 2 + transform.parent.Find("Cube (3)").localScale.x + transform.localScale.x / 2;
+                if (transform.position.x - dx > nx - Constants.BOARDWIDTH / 2 + transform.parent.Find("Cube (3)").localScale.x + transform.localScale.x / 2)
+                {
+                    // Move down, according to user's input.
+                    rg.velocity = new Vector3(-dx, 0, 0);
+                }
+                else
+                {
+                    rg.velocity = Vector3.zero;
+                }
             }
             else
             {
                 // Another key is not acceptable, don't move.
                 rg.velocity = new Vector3(0, 0, 0);
             }
-            //if (Input.GetKeyUp(up) || Input.GetKeyUp(down))
-            //{
-              //  rg.velocity = new Vector3(0, 0, 0);
-            //}
+        }
     }
+
+
     // <summary>
     // Move to another board.
     // </summary>
@@ -92,6 +106,8 @@ public class playerMove : MonoBehaviour, IMoveBoardListener, ballListeners
     // <param name="next"> The board to move to. </param>
     public void MoveBoard(int previous, int next)
     {
+        currBoard = next;
+
         if ((transform.parent.name.Substring(11)[1] - '0') * 3 + (transform.parent.name.Substring(11)[3] - '0') + 1 == next)
         {
             // If the player is on the next board.
@@ -109,10 +125,5 @@ public class playerMove : MonoBehaviour, IMoveBoardListener, ballListeners
             // Restart position.
             transform.position = new Vector3(x, 0, transform.position.z);
         }
-    }
-
-    public void heBorn()
-    {
-        
     }
 }
