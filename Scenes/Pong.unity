@@ -278,6 +278,45 @@ PrefabInstance:
     - {fileID: 0}
     - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: ccb0bc165a997ff4bb644db7c56a3b1a, type: 3}
+--- !u!1 &5624960356742173099 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5624960355429335186, guid: ccb0bc165a997ff4bb644db7c56a3b1a,
+    type: 3}
+  m_PrefabInstance: {fileID: 5624960356742173098}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5624960356742173100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5624960356742173099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 204
+    i1: 176
+    i2: 188
+    i3: 22
+    i4: 90
+    i5: 153
+    i6: 127
+    i7: 244
+    i8: 187
+    i9: 100
+    i10: 77
+    i11: 183
+    i12: 197
+    i13: 106
+    i14: 59
+    i15: 26
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!1001 &8829106268913598659
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -353,7 +392,7 @@ PrefabInstance:
     - target: {fileID: 8829106267297712000, guid: 6e21928f62cf9024ba5956281f04bc44,
         type: 3}
       propertyPath: m_SpawnPrefabs.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8829106267297712000, guid: 6e21928f62cf9024ba5956281f04bc44,
         type: 3}
@@ -376,6 +415,18 @@ PrefabInstance:
       propertyPath: player2
       value: 
       objectReference: {fileID: 202468084986321495, guid: 7ed7e33cd4590874b8df7963e5bb82fb,
+        type: 3}
+    - target: {fileID: 8829106267297712000, guid: 6e21928f62cf9024ba5956281f04bc44,
+        type: 3}
+      propertyPath: m_SpawnPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 1580447517486076812, guid: cf461a239839b664c810550ceb80c987,
+        type: 3}
+    - target: {fileID: 8829106267297712000, guid: 6e21928f62cf9024ba5956281f04bc44,
+        type: 3}
+      propertyPath: m_SpawnPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 324338814158245012, guid: f0aee0e3d3ea9a9479ecdc6d3dd6f549,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e21928f62cf9024ba5956281f04bc44, type: 3}
